@@ -10,13 +10,19 @@ public class PlayerController : MonoBehaviour
     public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
     
     SpriteRenderer spriteRenderer;
-    
+
     PlayerAnimController playerAnim = null;
+    
+    private VehicleController vehicleController;
+    private VehicleAnimController vehicleAnim;
+    
     
     [SerializeField] private GameObject elfGameObject;
     [SerializeField] private GameObject zombieGameObject;
 
     Camera cam;
+    
+    Boolean isOnVehicle = false;
     
     void Awake()
     {
@@ -25,6 +31,9 @@ public class PlayerController : MonoBehaviour
         
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         if (spriteRenderer == null) { Debug.LogError("SpriteRenderer is null"); }
+
+        vehicleController = GetComponent<VehicleController>();
+        vehicleAnim = GetComponentInChildren<VehicleAnimController>();
         
         cam = Camera.main;
     }
@@ -32,11 +41,17 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Rotate();
+        
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            isOnVehicle = !isOnVehicle;
+            vehicleController.RideOnVehicle(isOnVehicle);
+        }
     }
 
     private void FixedUpdate()
     {
-        Move(moveSpeed);
+        Move();
     }
     
     private void Rotate()
@@ -53,7 +68,7 @@ public class PlayerController : MonoBehaviour
     }
     
     
-    private void Move(float moveSpeed)
+    private void Move()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");  //입력
         float vertical = Input.GetAxisRaw("Vertical");
@@ -64,6 +79,7 @@ public class PlayerController : MonoBehaviour
         transform.position += moveDir * moveSpeed * Time.fixedDeltaTime;    //이동
         
         playerAnim?.MoveAnim(moveDir);    //애니메이션
+        vehicleAnim?.MoveAnim(moveDir);
     }
 
     public void ReloadSpriteRenderer()
