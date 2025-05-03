@@ -13,7 +13,6 @@ public class FlappyPlaneUI : MonoBehaviour
 
     private void Awake()
     {
-        gameObject.SetActive(false);
         starButton.onClick.AddListener(OnClickStart);
         exitButton.onClick.AddListener(OnClickExit);
     }
