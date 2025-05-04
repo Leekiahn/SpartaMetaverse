@@ -14904,6 +14904,8 @@ MonoBehaviour:
 
     F : Vehicle
 
+    E : Color
+
     ESC : Menu'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
