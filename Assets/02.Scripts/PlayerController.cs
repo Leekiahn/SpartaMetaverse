@@ -44,8 +44,19 @@ public class PlayerController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.F))
         {
-            isOnVehicle = !isOnVehicle;
-            vehicleController.RideOnVehicle(isOnVehicle);
+            if (!zombieGameObject.activeSelf)
+            {
+                isOnVehicle = !isOnVehicle;
+                vehicleController.RideOnVehicle(isOnVehicle);
+            }
+        }
+        else
+        {
+            if (zombieGameObject.activeSelf)
+            {
+                isOnVehicle = false;
+                vehicleController.RideOnVehicle(isOnVehicle);
+            }
         }
     }
 
